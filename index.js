@@ -7,6 +7,7 @@ const app=express();
 app.set('view engine','ejs');
 // app.set('view',path.join(__dirname,'view'));
 app.set('views', './views');
+app.use(express.urlencoded({extended: true}));
 
 var contact=[
     {
@@ -18,11 +19,25 @@ var contact=[
         number:"9928221785"
     }
 ];
+// app.post('/create_contact',function(req,res){
+//     contact.push({name:req.body.name,
+//                 number:req.body.number});
+
+//                 return res.redirect('back');
+   
+// })
 
 app.get('/',function(req,res){
 
     // res.send('<h1>codeial</h1>');
-    return res.render('home',{title:"codeial",contact_list: contact});
+    return res.render('home',{title:"codeial",contact: contact});
+});
+
+app.post('/create-contact', function(req, res){
+    
+    contact.push(req.body);
+    return res.redirect('/');
+
 });
 
 

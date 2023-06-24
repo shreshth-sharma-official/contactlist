@@ -16,7 +16,7 @@
         <![endif]-->
         <div>
             <ul>
-                <%for(let i of contact_list){%>
+                <%for(let i of contact){%>
                 <li>
                     <p><%= i.name %></p>
                     <p><%= i.number %></p>
@@ -25,6 +25,12 @@
             </ul>
         </div>
         
+        <form action="/create-contact" method="post">
+            <input type="text" name="name" placeholder="write name">
+            <input type="text" name="number" placeholder="write number">
+            <button> submit</button>
+        </form>
+
         <!-- <script src="" async defer></script> -->
     </body>
 </html>
