@@ -8,6 +8,7 @@ app.set('view engine','ejs');
 // app.set('view',path.join(__dirname,'view'));
 app.set('views', './views');
 app.use(express.urlencoded({extended: true}));
+app.use(express.static('assets'));
 
 var contact=[
     {
@@ -19,13 +20,7 @@ var contact=[
         number:"9928221785"
     }
 ];
-// app.post('/create_contact',function(req,res){
-//     contact.push({name:req.body.name,
-//                 number:req.body.number});
 
-//                 return res.redirect('back');
-   
-// })
 
 app.get('/',function(req,res){
 
@@ -33,13 +28,32 @@ app.get('/',function(req,res){
     return res.render('home',{title:"codeial",contact: contact});
 });
 
-app.post('/create-contact', function(req, res){
+// app.post('/create-contact', function(req, res){
     
-    contact.push(req.body);
-    return res.redirect('/');
+//     contact.push(req.body);
+//     return res.redirect('back');
+
+// });
+app.post('/create-contact',function(req,res){
+    contact.push({name:req.body.name,
+                number:req.body.number});
+
+                return res.redirect('back');
+   
+})
+app.get('/delete-this-contact/',function(req,res)
+{
+    console.log(req.query); 
+    let number=req.query.number;
+    let contactindex = contact.find(i => i.number == number )
+
+    if(contactindex!=-1)
+    {
+        contact.splice(contactindex,1);
+    }
+    res.redirect('back');
 
 });
-
 
 app.listen(port,function(err){
     if(err)

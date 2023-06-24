@@ -8,18 +8,25 @@
         </title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="/css/index.css">
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <h1>
+            codeial
+        </h1>
         <div>
             <ul>
                 <%for(let i of contact){%>
                 <li>
                     <p><%= i.name %></p>
                     <p><%= i.number %></p>
+                    <div>
+                        <a href="/delete-this-contact/?number=<%=i.number%>"> delete </a>
+                    </div>
+                    
                 </li>
             <%}%>
             </ul>
