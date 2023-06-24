@@ -57,6 +57,7 @@
     "mime-db": "^1.52.0",
     "mime-types": "^2.1.35",
     "minimatch": "^3.1.2",
+    "mongoose": "^7.3.1",
     "ms": "^2.0.0",
     "negotiator": "^0.6.3",
     "nodemon": "^2.0.22",
@@ -109,5 +110,6 @@
   "bugs": {
     "url": "https://github.com/shreshth-sharma-official/codeial/issues"
   },
-  "homepage": "https://github.com/shreshth-sharma-official/codeial#readme"
+  "homepage": "https://github.com/shreshth-sharma-official/codeial#readme",
+  "devDependencies": {}
 }

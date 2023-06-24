@@ -1,43 +1,36 @@
-<!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>
-            <%= title %>
+            <%= locals.title%>
         </title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/home.css">
     </head>
     <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <h1>
-            codeial
-        </h1>
+
         <div>
             <ul>
-                <%for(let i of contact){%>
-                <li>
-                    <p><%= i.name %></p>
-                    <p><%= i.number %></p>
-                    <div>
-                        <a href="/delete-this-contact/?number=<%=i.number%>"> delete </a>
+                   
+                <% for (let i of contact_list) { %> 
+                   <div class="contact"> 
+                        <li>
+                            <p><%= i.name %></p>
+                            <p><%= i.phone %></p>
+                        </li>
                     </div>
-                    
-                </li>
-            <%}%>
+                    <div class="delete-button">
+                        <a href="/delete-contact/?phone=<%= i.phone %>">
+                            delete
+                        </a>
+                    </div>
+                <% } %>
             </ul>
         </div>
-        
-        <form action="/create-contact" method="post">
-            <input type="text" name="name" placeholder="write name">
-            <input type="text" name="number" placeholder="write number">
-            <button> submit</button>
-        </form>
 
-        <!-- <script src="" async defer></script> -->
+        <form action="/create-contact" method="POST">
+            <input type="text" name="name" placeholder="Enter name" required>
+            <input type="number" name="phone" placeholder="Enter phone" required>
+            <button type="submit">Add contact</button>
+        </form>
+        <script type="text/javascript" src="/js/home.js"></script>
     </body>
 </html>
