@@ -96,18 +96,10 @@ app.get('/delete-contact/', function(req, res){
     let number = req.query.phone;
     console.log(number);
 
-    contactList.forEach((obj) => {
-        console.log(obj);
-      });
+    // contactList.forEach((obj) => {
+    //     console.log(obj);
+    //   });
       
-    // let contactindex = contactList.findIndex(i => i.phone == phone);
-    
-    // console.log(contactindex);
-    
-    // if(contactindex != -1){
-    //     contactList.splice(contactindex, 1);
-    // }
-
     Contact.deleteOne({ phone: number })
     .then(() => {
       console.log('Data deleted successfully');
