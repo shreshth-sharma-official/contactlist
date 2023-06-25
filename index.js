@@ -38,30 +38,71 @@ app.get('/practice', function(req, res){
 app.get('/', function(req, res){
 
 
-    Contact.find({}, function(err, contacts){
-        if(err){
-            console.log("error in fetching contacts from db");
-            return;
-        }
-        return res.render('home',{
-            title: "Contact List",
-            contact_list: contacts
-        });
+    // Contact.find({}, function(err, contacts){
+    //     if(err){
+    //         console.log("error in fetching contacts from db");
+    //         return;
+    //     }
+    //     return res.render('home',{
+    //         title: "Contact List",
+    //         contact_list: contacts
+    //     });
 
-    })
+    // })
+
+
+    Contact.find()
+  .then((contacts) => {
+    return res.render('home',{
+                title: "Contact List",
+                contact_list: contacts
+            });
+  })
+  .catch((error) => {
+    console.log("error in fetching contacts from db");
+           return;
+  });
+
+});
+
+
   
-})
 app.post('/create-contact', function(req, res){
      
-    Contact.create({
-        name: req.body.name,
-        phone: req.body.phone
-    }, function(err, newContact){
-        if(err){console.log('Error in creating a contact!')
-            return;}
+    // Contact.create({
+    //     name: req.body.name,
+    //     phone: req.body.phone
+    // }, function(err, newContact){
+    //     if(err){console.log('Error in creating a contact!')
+    //         return;}
+    //         console.log('******', newContact);
+    //         return res.redirect('back');
+    // })
+
+    // Contact.create({ 
+    //     name: req.body.name, 
+    //     phone:req.body.phone 
+    // },
+    // )
+    //    .then(result => {
+    //     console.log(result)
+    // })
+
+
+    const newnumber = new Contact({
+        name: req.body.name, 
+        phone:req.body.phone 
+      });
+      
+      newnumber.save()
+        .then((newContact) => {
             console.log('******', newContact);
-            return res.redirect('back');
-    })
+                    return res.redirect('back');
+        })
+        .catch((error) => {
+            console.log('Error in creating a contact!')
+                    return;
+        });
   
 
 });
@@ -73,13 +114,23 @@ app.listen(port, function(err){
     console.log('Yup!My Server is running on Port', port);
 })
 
+function findIndexof(arr, phone) {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].phone == phone) {
+        return i;
+      }
+    }
+    return -1;
+  }
 
 app.get('/delete-contact/', function(req, res){
     console.log(req.query);
-    let phone = req.query.phone
+    let phone = String(req.query.phone);
 
-    let contactindex = contactList.findIndex(contact => contact.phone == phone);
-
+    // let contactindex = contactList.findIndex(i => i.phone == phone);
+    const contactindex = findIndexof(contactList, phone);
+// console.log(contactindex);
+    console.log(contactindex);
     if(contactindex != -1){
         contactList.splice(contactindex, 1);
     }
