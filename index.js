@@ -36,21 +36,7 @@ app.get('/practice', function(req, res){
 
 
 app.get('/', function(req, res){
-
-
-    // Contact.find({}, function(err, contacts){
-    //     if(err){
-    //         console.log("error in fetching contacts from db");
-    //         return;
-    //     }
-    //     return res.render('home',{
-    //         title: "Contact List",
-    //         contact_list: contacts
-    //     });
-
-    // })
-
-
+// contacts  is variable
     Contact.find()
   .then((contacts) => {
     return res.render('home',{
@@ -68,27 +54,7 @@ app.get('/', function(req, res){
 
   
 app.post('/create-contact', function(req, res){
-     
-    // Contact.create({
-    //     name: req.body.name,
-    //     phone: req.body.phone
-    // }, function(err, newContact){
-    //     if(err){console.log('Error in creating a contact!')
-    //         return;}
-    //         console.log('******', newContact);
-    //         return res.redirect('back');
-    // })
-
-    // Contact.create({ 
-    //     name: req.body.name, 
-    //     phone:req.body.phone 
-    // },
-    // )
-    //    .then(result => {
-    //     console.log(result)
-    // })
-
-
+    
     const newnumber = new Contact({
         name: req.body.name, 
         phone:req.body.phone 
@@ -97,6 +63,7 @@ app.post('/create-contact', function(req, res){
       newnumber.save()
         .then((newContact) => {
             console.log('******', newContact);
+                    contactList.push(newContact);
                     return res.redirect('back');
         })
         .catch((error) => {
@@ -124,16 +91,30 @@ function findIndexof(arr, phone) {
   }
 
 app.get('/delete-contact/', function(req, res){
-    console.log(req.query);
-    let phone = String(req.query.phone);
 
+    console.log(req.query);
+    let number = req.query.phone;
+    console.log(number);
+
+    contactList.forEach((obj) => {
+        console.log(obj);
+      });
+      
     // let contactindex = contactList.findIndex(i => i.phone == phone);
-    const contactindex = findIndexof(contactList, phone);
-// console.log(contactindex);
-    console.log(contactindex);
-    if(contactindex != -1){
-        contactList.splice(contactindex, 1);
-    }
+    
+    // console.log(contactindex);
+    
+    // if(contactindex != -1){
+    //     contactList.splice(contactindex, 1);
+    // }
+
+    Contact.deleteOne({ phone: number })
+    .then(() => {
+      console.log('Data deleted successfully');
+    })
+    .catch((error) => {
+      console.error('Error deleting data:', error);
+    });
 
     return res.redirect('back');
 });
